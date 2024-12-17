@@ -1,3 +1,4 @@
+!pip install faiss-cpu
 import requests
 from bs4 import BeautifulSoup
 from sentence_transformers import SentenceTransformer
@@ -51,6 +52,9 @@ class ResponseGenerator:
         from huggingface_hub import notebook_login
         notebook_login()  # Use this for notebook environments
 
+        # Import the pipeline function here
+        from transformers import pipeline 
+
         # Update the model identifier to 'gpt2'
         self.llm = pipeline('text-generation', model='gpt2')
 
@@ -59,6 +63,7 @@ class ResponseGenerator:
         prompt = f"Context: {context}\nQuestion: {user_query}\nAnswer:"
         response = self.llm(prompt, max_length=150)
         return response[0]['generated_text']
+ 
 if __name__ == "__main__":
     urls = [
         "https://www.uchicago.edu/",
